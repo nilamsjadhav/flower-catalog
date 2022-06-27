@@ -1,4 +1,4 @@
-const { toHtml } = require('./library.js');
+const toHtml = (content) => `<html><body><h2>${content}</h2><body><html>`;
 
 const notFound = (request, response) => {
   response.statusCode = 404;
