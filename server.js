@@ -1,4 +1,4 @@
-const { notFound } = require('./src/dynamicHandler.js');
+const { notFound, dynamicHandler } = require('./src/dynamicHandler.js');
 const { serveFileContent } = require('./src/serveFileContent.js');
 const { startServer } = require('./src/startServer.js');
 
@@ -10,6 +10,7 @@ const handle = (handlers) => {
 
 const handlers = [
   serveFileContent,
+  dynamicHandler,
   notFound];
 
 startServer(4443, handle(handlers), process.argv[2]);
