@@ -1,0 +1,11 @@
+*{
+  margin: 5px;
+  padding: 0px;
+}
+
+.pageContent{
+  width: 80%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
