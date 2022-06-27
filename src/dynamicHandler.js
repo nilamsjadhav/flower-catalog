@@ -8,13 +8,18 @@ const notFound = (request, response) => {
   return true;
 };
 
-const formatContent = (content) => content.replace('+', ' ');
+const formatContent = (content) => content.replaceAll('+', ' ');
 
-const storeComments = ({ name, comment }) => {
-  const content = fs.readFileSync('./public/data/comment.json', 'utf8');
+const structureComment = ({ name, comment }, content) => {
   const dateTime = new Date().toLocaleString();
   const comments = JSON.parse(content);
   comments.unshift({ dateTime, name, comment: formatContent(comment) });
+  return comments;
+};
+
+const storeComments = (queryParams) => {
+  const content = fs.readFileSync('./public/data/comment.json', 'utf8');
+  const comments = structureComment(queryParams, content);
   fs.writeFileSync('./public/data/comment.json', JSON.stringify(comments));
 };
 

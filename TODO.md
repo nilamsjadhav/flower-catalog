@@ -1,11 +1,12 @@
 - ### DO ###
 
   - [ ] create directory for html
-  - [ ] Refactor storeComments function.
   - [ ] Modify structure of guestBook.html.
+  - [ ] Display history on guest book page.
 
 - ### DONE ###
 
+  - [x] Refactored storeComments function.
   - [x] created page for taking comment from user
   - [x] created directory for css 
   - [x] created ageratum page
