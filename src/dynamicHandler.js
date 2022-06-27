@@ -15,7 +15,7 @@ const structureComment = ({ name, comment }, content) => {
   const comments = JSON.parse(content);
   comments.unshift({
     dateTime,
-    name: formateContent(name),
+    name: formatContent(name),
     comment: formatContent(comment)
   });
   return comments;

@@ -2,6 +2,7 @@
 
   - [ ] Modify structure of guestBook.html.
   - [ ] Add feature when user click on jar it will hide for a second.
+  - [ ] Add design for history of comment
 
 - ### DONE ###
 
