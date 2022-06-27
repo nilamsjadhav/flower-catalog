@@ -3,7 +3,8 @@ const fs = require('fs');
 const extension = {
   png: 'image/png',
   jpeg: 'image/jpeg',
-  html: 'text/html'
+  html: 'text/html',
+  pdf: 'application/pdf'
 };
 
 const getMimeType = (file) => {
