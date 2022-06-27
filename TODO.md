@@ -1,13 +1,13 @@
 - ### DO ###
 
-  - [ ] create directory for css 
   - [ ] create directory for html
   - [ ] create page for taking comment from user
 
 - ### DONE ###
 
-  - [x] create ageratum page
-  - [x] create css for ageratum 
+  - [x] create directory for css 
+  - [x] created ageratum page
+  - [x] created css for ageratum 
   - [x] created Abeliophyllum page
   - [x] created css for Abeliophyllum
   - [x] Implemented server.
