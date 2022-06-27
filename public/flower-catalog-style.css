@@ -15,13 +15,8 @@
 }
 
 h1{
-  text-align: center;
-  border-bottom: 1px solid gray;
-}
-
-h2{
   font-family: 'Times New Roman', Times, serif;
-  text-align: right;
+  text-align: center;
   border-bottom: 1px solid black;
   padding: 0.7em 3em;
   color: rgb(237, 188, 97);
