@@ -1,10 +1,11 @@
 - ### DO ###
 
   - [ ] Modify structure of guestBook.html.
-  - [ ] Display history on guest book page.
+  - [ ] Add feature when user click on jar it will hide for a second.
 
 - ### DONE ###
 
+  - [x] Display history on guest book page.
   - [x] Refactored storeComments function.
   - [x] created page for taking comment from user
   - [x] created directory for css 
@@ -13,7 +14,7 @@
   - [x] created Abeliophyllum page
   - [x] created css for Abeliophyllum
   - [x] Implemented server.
-  - [x] create flower-catalog page
-  - [x] create image folder for images
-  - [x] Align headings
-  - [x] create css for flower catalog page
+  - [x] created flower-catalog page
+  - [x] created image folder for images
+  - [x] Aligned headings
+  - [x] created css for flower catalog page
