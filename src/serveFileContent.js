@@ -1,6 +1,6 @@
 const fs = require('fs');
 
-const extension = {
+const extensions = {
   png: 'image/png',
   jpeg: 'image/jpeg',
   html: 'text/html',
@@ -9,11 +9,15 @@ const extension = {
 
 const getMimeType = (file) => {
   const fileExt = file.slice(file.lastIndexOf('.') + 1);
-  return extension[fileExt] || 'text/plain';
+  return extensions[fileExt] || 'text/plain';
 };
 
 const serveFileContent = ({ uri }, response, path) => {
-  const fileName = path + uri;
+  let fileName = path + uri;
+
+  if (uri === '/') {
+    fileName = `${path}/flower-catalog.html`;
+  }
 
   if (!fs.existsSync(fileName)) {
     return false;

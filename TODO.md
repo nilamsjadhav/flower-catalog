@@ -1,6 +1,5 @@
 - ### DO ###
 
-  - [ ] create directory for html
   - [ ] Modify structure of guestBook.html.
   - [ ] Display history on guest book page.
 
