@@ -1,11 +1,5 @@
 const fs = require('fs');
-const { toHtml, generateList } = require('./library.js');
-
-const notFound = (request, response) => {
-  response.statusCode = 404;
-  response.send(toHtml('Not found'));
-  return true;
-};
+const { generateList } = require('./library.js');
 
 const structureComment = ({ name, comment }, content) => {
   const dateTime = new Date().toLocaleString();
@@ -35,7 +29,7 @@ const commentHandler = ({ queryParams }, response) => {
   return displayGuestBook(comments, template, response);
 };
 
-const dynamicHandler = (request, response) => {
+const guestBookHandler = (request, response) => {
   const { uri } = request;
 
   if (uri === '/guest-book') {
@@ -44,4 +38,4 @@ const dynamicHandler = (request, response) => {
   return false;
 };
 
-module.exports = { dynamicHandler, notFound, displayGuestBook };
+module.exports = { guestBookHandler, displayGuestBook };

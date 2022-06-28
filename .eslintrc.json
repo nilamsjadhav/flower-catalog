@@ -56,7 +56,7 @@
       }
     ],
     "max-statements": "error",
-    "no-console": "warn",
+    "no-console": "off",
     "no-else-return": "error",
     "no-eval": "error",
     "no-implicit-globals": "error",
