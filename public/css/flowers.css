@@ -16,3 +16,8 @@ h1{
   padding: 0.7em 3em;
   color: rgb(237, 188, 97);
 }
+
+.comments{
+  border-bottom: 1px solid black;
+  border-top: 1px solid black;
+}
