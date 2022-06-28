@@ -1,5 +1,7 @@
 - ### DO ###
 
+  - [ ] Read comments when server start.
+  - [ ] write comments before serving request.
   - [ ] Add feature when user click on jar it will hide for a second.
   - [ ] Change structure of comments.
   - [ ] Create guest-book entity.

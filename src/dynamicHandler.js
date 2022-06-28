@@ -1,12 +1,5 @@
 const fs = require('fs');
-
-const toHtml = (content) => `<html><body><h2>${content}</h2><body><html>`;
-
-const generateList = (comments) => {
-  return comments.map(({ dateTime, name, comment }) => {
-    return `<li>${dateTime} ${name} ${comment}</li>`;
-  }).join('');
-};
+const { toHtml, generateList } = require('./ library.js');
 
 const notFound = (request, response) => {
   response.statusCode = 404;
@@ -14,16 +7,10 @@ const notFound = (request, response) => {
   return true;
 };
 
-const formatContent = (content) => content.replaceAll('+', ' ');
-
 const structureComment = ({ name, comment }, content) => {
   const dateTime = new Date().toLocaleString();
   const comments = JSON.parse(content);
-  comments.unshift({
-    dateTime,
-    name: formatContent(name),
-    comment: formatContent(comment)
-  });
+  comments.unshift({ dateTime, name, comment });
   return comments;
 };
 
@@ -32,6 +19,7 @@ const displayGuestBook = (comments, template, response) => {
   const modifiedTemplate = template.replace('__HISTORY__', commentList);
   response.setHeader('content-type', 'text/html');
   response.send(modifiedTemplate);
+  return true;
 };
 
 const commentHandler = ({ queryParams }, response) => {
@@ -44,8 +32,7 @@ const commentHandler = ({ queryParams }, response) => {
   }
 
   const template = fs.readFileSync('./public/data/template.html', 'utf8');
-  displayGuestBook(comments, template, response);
-  return true;
+  return displayGuestBook(comments, template, response);
 };
 
 const dynamicHandler = (request, response) => {

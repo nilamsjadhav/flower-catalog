@@ -1,3 +1,13 @@
+const formatContent = (content) =>
+  content.replaceAll('+', ' ').replaceAll('\r\n', '%0D%0A');
+
+const parseContent = ({ name, comment }) => {
+  return {
+    name: formatContent(name),
+    comment: formatContent(comment)
+  };
+};
+
 const parseParams = (params) => {
   const queryParams = {};
   const paramString = params.split('&');
@@ -6,7 +16,7 @@ const parseParams = (params) => {
     const [param, value] = parameter.split('=');
     queryParams[param] = value;
   });
-  return queryParams;
+  return parseContent(queryParams);
 };
 
 const parseUri = (rawUri) => {
