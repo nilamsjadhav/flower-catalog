@@ -27,7 +27,7 @@ const structureComment = ({ name, comment }, content) => {
   return comments;
 };
 
-const addComments = (comments, template, response) => {
+const displayGuestBook = (comments, template, response) => {
   const commentList = generateList(comments);
   const modifiedTemplate = template.replace('__HISTORY__', commentList);
   response.setHeader('content-type', 'text/html');
@@ -36,31 +36,25 @@ const addComments = (comments, template, response) => {
 
 const commentHandler = ({ queryParams }, response) => {
   const content = fs.readFileSync('./public/data/comment.json', 'utf8');
-  const comments = structureComment(queryParams, content);
-  fs.writeFileSync('./public/data/comment.json', JSON.stringify(comments));
+  let comments = JSON.parse(content);
+
+  if (queryParams) {
+    comments = structureComment(queryParams, content);
+    fs.writeFileSync('./public/data/comment.json', JSON.stringify(comments));
+  }
 
   const template = fs.readFileSync('./public/data/template.html', 'utf8');
-  addComments(comments, template, response);
-  return true;
-};
-
-const guestBookHandler = (response) => {
-  const content = fs.readFileSync('./public/data/comment.json', 'utf8');
-  const template = fs.readFileSync('./public/data/template.html', 'utf8');
-  addComments(JSON.parse(content), template, response);
+  displayGuestBook(comments, template, response);
   return true;
 };
 
 const dynamicHandler = (request, response) => {
-  const { uri } = request
-
-  if (uri === '/comment') {
-    return commentHandler(request, response)
-  }
+  const { uri } = request;
 
   if (uri === '/guest-book') {
-    return guestBookHandler(response)
+    return commentHandler(request, response);
   }
   return false;
 };
-module.exports = { dynamicHandler, toHtml, notFound, addComments };
+
+module.exports = { dynamicHandler, toHtml, notFound, displayGuestBook };

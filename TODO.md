@@ -2,12 +2,12 @@
 
   - [ ] Add feature when user click on jar it will hide for a second.
   - [ ] Add design for history of comment
-  - [ ] Refactor code of commentHandler
-  - [ ] Refactor code of guestBookHandler
   - [ ] Change structure of displaying comments.
 
 - ### DONE ###
 
+  - [ ]~~ Refactor code of commentHandler~~
+  - [ ]~~Refactor code of guestBookHandler~~
   - [x] Display history on guest book page.
   - [x] Refactored storeComments function.
   - [x] created page for taking comment from user
