@@ -1,5 +1,5 @@
 const fs = require('fs');
-const { toHtml, generateList } = require('./ library.js');
+const { toHtml, generateList } = require('./library.js');
 
 const notFound = (request, response) => {
   response.statusCode = 404;
@@ -44,4 +44,4 @@ const dynamicHandler = (request, response) => {
   return false;
 };
 
-module.exports = { dynamicHandler, toHtml, notFound, displayGuestBook };
+module.exports = { dynamicHandler, notFound, displayGuestBook };
