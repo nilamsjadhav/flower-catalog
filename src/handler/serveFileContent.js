@@ -2,9 +2,11 @@ const fs = require('fs');
 
 const extensions = {
   png: 'image/png',
-  jpeg: 'image/jpeg',
+  jpg: 'image/jpg',
   html: 'text/html',
-  pdf: 'application/pdf'
+  pdf: 'application/pdf',
+  css: 'text/css',
+  gif: 'image/gif'
 };
 
 const getMimeType = (file) => {
@@ -12,20 +14,20 @@ const getMimeType = (file) => {
   return extensions[fileExt] || 'text/plain';
 };
 
-const serveFileContent = ({ uri }, response, path) => {
-  let fileName = path + uri;
+const serveFileContent = (path) => (request, response) => {
+  const uri = request.url.pathname;
 
+  let fileName = path + uri;
   if (uri === '/') {
-    fileName = `${path}/flower-catalog.html`;
+    fileName = path + '/flower-catalog.html';
   }
 
   if (!fs.existsSync(fileName)) {
     return false;
   }
-
   response.setHeader('content-type', getMimeType(fileName));
   const content = fs.readFileSync(fileName);
-  response.send(content);
+  response.end(content);
   return true;
 };
 

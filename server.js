@@ -1,16 +1,21 @@
-const { guestBookHandler } = require('./src/guestBookHandler.js');
-const { notFound } = require('./src/notFoundHandler.js');
-const { serveFileContent } = require('./src/serveFileContent.js');
-const { startServer } = require('./src/startServer.js');
+const { guestBookHandler } = require('./src/handler/guestBookHandler.js');
+const { notFound } = require('./src/handler/notFoundHandler');
+const { serveFileContent } = require('./src/handler/serveFileContent.js');
+const { startServer } = require('./src/server/startServer.js');
 
 const handle = (handlers) => {
-  return (request, response, path) => {
-    return handlers.some(handler => handler(request, response, path));
+  return (request, response) => {
+    for (const handler of handlers) {
+      if (handler(request, response)) {
+        return true;
+      }
+    }
+    return false;
   };
 };
 
 const handlers = [
-  serveFileContent,
+  serveFileContent('./public'),
   guestBookHandler,
   notFound];
 

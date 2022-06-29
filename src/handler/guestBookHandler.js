@@ -12,7 +12,7 @@ const displayGuestBook = (comments, template, response) => {
   const commentList = generateList(comments);
   const modifiedTemplate = template.replace('__HISTORY__', commentList);
   response.setHeader('content-type', 'text/html');
-  response.send(modifiedTemplate);
+  response.write(modifiedTemplate);
   return true;
 };
 
@@ -30,7 +30,7 @@ const commentHandler = ({ queryParams }, response) => {
 };
 
 const guestBookHandler = (request, response) => {
-  const { uri } = request;
+  const uri = request.url.pathname;
 
   if (uri === '/guest-book') {
     return commentHandler(request, response);
