@@ -5,11 +5,14 @@
   - [ ] Add feature when user click on jar it will hide for a second.
   - [ ] Change structure of comments.
   - [ ] Create guest-book entity.
-  - [ ] use npm in working directory
-  - [ ] Use path for retrieving extension
-
+  - [ ] Rename handle.
+  - [ ] Rename library to htmlLibrary.
+  
 - ### DONE ###
 
+  - [x] Move handler into new file.
+  - [x] Use path for retrieving extension
+  - [x] use npm in working directory
   - [x] Create directory structure.
   - [x] Added border to comment history.
   - [ ]~~ Refactor code of commentHandler~~

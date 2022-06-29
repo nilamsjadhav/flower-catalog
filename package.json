@@ -1,0 +1,24 @@
+{
+  "name": "flower-catalog",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/nilamsjadhav/flower-catalog.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/nilamsjadhav/flower-catalog/issues"
+  },
+  "homepage": "https://github.com/nilamsjadhav/flower-catalog#readme",
+  "dependencies": {
+    "mime-types": "^2.1.35"
+  }
+}
