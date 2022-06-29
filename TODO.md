@@ -1,15 +1,15 @@
 - ### DO ###
 
-  - [ ] Read comments when server start.
-  - [ ] write comments before serving request.
   - [ ] Add feature when user click on jar it will hide for a second.
   - [ ] Change structure of comments.
   - [ ] Create guest-book entity.
   - [ ] Rename handle.
-  - [ ] Rename library to htmlLibrary.
   
 - ### DONE ###
 
+  - [x] write comments before serving request.
+  - [x] Rename library to htmlLibrary.
+  - [x] Read comments when server start.
   - [x] Move handler into new file.
   - [x] Use path for retrieving extension
   - [x] use npm in working directory
