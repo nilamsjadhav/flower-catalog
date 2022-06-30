@@ -3,10 +3,14 @@
   - [ ] Add feature when user click on jar it will hide for a second.
   - [ ] Change structure of comments.
   - [ ] Create guest-book entity.
-  - [ ] Rename handle.
   
 - ### DONE ###
 
+  - [x] while checking uri check method also.
+  - [x] Rename handle => createRouter.
+  - [x] rename guestBookHandler to guestBookRouter.
+  - [x] In serveFileContent function rename uri => pathname.
+  - [x] use mime-type module.
   - [x] write comments before serving request.
   - [x] Rename library to htmlLibrary.
   - [x] Read comments when server start.

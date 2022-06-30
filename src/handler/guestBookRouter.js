@@ -4,7 +4,6 @@ const { generateList } = require('./htmlLibrary.js');
 const addComment = ({ name, comment }, comments) => {
   const dateTime = new Date().toLocaleString();
   comments.unshift({ dateTime, name, comment });
-  console.log(comments);
   return comments;
 };
 
@@ -23,15 +22,16 @@ const commentHandler = (request, response) => {
   return showGuestBook(request, response);
 };
 
-const guestBookHandler = (request, response) => {
+const guestBookRouter = (request, response) => {
   const pathname = request.url.pathname;
-  if (pathname === '/guest-book') {
+
+  if (pathname === '/guest-book' && request.method === 'GET') {
     return showGuestBook(request, response);
   }
-  if (pathname === '/add-comment') {
+  if (pathname === '/add-comment' && request.method === 'GET') {
     return commentHandler(request, response);
   }
   return false;
 };
 
-module.exports = { guestBookHandler, displayGuestBook: showGuestBook };
+module.exports = { guestBookRouter, showGuestBook };

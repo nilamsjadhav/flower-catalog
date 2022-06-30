@@ -69,7 +69,7 @@
     "max-depth": "error",
     "no-mixed-operators": "error",
     "complexity": [
-      "error",
+      "off",
       4
     ],
     "no-extra-parens": "error",

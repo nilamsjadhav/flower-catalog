@@ -1,9 +1,9 @@
-const { guestBookHandler } = require('./handler/guestBookHandler.js');
-const { notFound } = require('./handler/notFoundHandler');
+const { guestBookRouter } = require('./handler/guestBookRouter.js');
+const { notFound } = require('./handler/notFoundHandler.js');
 const { serveFileContent } = require('./handler/serveFileContent.js');
 const { parseSearchParams } = require('./handler/parseRequest.js');
-const { handle } = require('./router.js');
-const { apiHandler } = require('./handler/apiHandler.js');
+const { createRouter } = require('./router.js');
+const { apiRouter } = require('./handler/apiRouter.js');
 const fs = require('fs');
 
 const storeComment = (staticSrcPath) => {
@@ -14,6 +14,10 @@ const storeComment = (staticSrcPath) => {
 const loadData = (userViews, template, guestBookPath) => {
   const comments = JSON.parse(userViews);
   return (request, response) => {
+    const pathname = request.url.pathname;
+    if (!pathname === '/guest-book' || pathname === '/add-comment') {
+      return false;
+    }
     request.comments = comments;
     request.template = template;
     request.storeComment = storeComment(guestBookPath);
@@ -28,12 +32,12 @@ const app = ({ staticSrcPath, guestBookPath, serveFrom }) => {
   const handlers = [
     loadGuestBook,
     parseSearchParams,
-    guestBookHandler,
-    apiHandler,
+    guestBookRouter,
+    apiRouter,
     serveFileContent(serveFrom),
     notFound
   ];
-  return handle(handlers);
+  return createRouter(handlers);
 };
 
 module.exports = { app };

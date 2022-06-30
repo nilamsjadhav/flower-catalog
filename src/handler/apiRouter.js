@@ -4,7 +4,7 @@ const showCommentLog = ({ comments }, response) => {
   return true;
 };
 
-const apiHandler = (request, response) => {
+const apiRouter = (request, response) => {
   const pathname = request.url.pathname;
 
   if (pathname === '/api/guest-book') {
@@ -13,4 +13,4 @@ const apiHandler = (request, response) => {
   return false;
 };
 
-module.exports = { apiHandler };
+module.exports = { apiRouter };

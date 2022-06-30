@@ -1,4 +1,4 @@
-const handle = (handlers) => {
+const createRouter = (handlers) => {
   return (request, response) => {
     for (const handler of handlers) {
       if (handler(request, response)) {
@@ -9,4 +9,4 @@ const handle = (handlers) => {
   };
 };
 
-module.exports = { handle };
+module.exports = { createRouter };

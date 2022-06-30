@@ -1,25 +1,15 @@
 const fs = require('fs');
-const path = require('path');
-
-const extensions = {
-  '.png': 'image/png',
-  '.jpg': 'image/jpg',
-  '.html': 'text/html',
-  '.pdf': 'application/pdf',
-  '.css': 'text/css',
-  '.gif': 'image/gif'
-};
+const mimeType = require('mime-types');
 
 const getMimeType = (file) => {
-  const fileExt = path.extname(file);
-  return extensions[fileExt] || 'text/plain';
+  return mimeType.lookup(file) || 'text/plain';
 };
 
 const serveFileContent = (path) => (request, response) => {
-  const uri = request.url.pathname;
+  const pathname = request.url.pathname;
 
-  let fileName = path + uri;
-  if (uri === '/') {
+  let fileName = path + pathname;
+  if (pathname === '/') {
     fileName = path + '/flower-catalog.html';
   }
 
