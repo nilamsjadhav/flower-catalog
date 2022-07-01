@@ -41,7 +41,7 @@ const guestBookRouter = (request, response, next) => {
     });
     return;
   }
-  next(request, response);
+  next();
 };
 
 module.exports = { guestBookRouter, showGuestBook };

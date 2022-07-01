@@ -10,7 +10,7 @@ const parseSearchParams = (request, response, next) => {
     queryParams[param] = value;
   }
   request.queryParams = queryParams;
-  next(request, response);
+  next();
 };
 
 module.exports = { parseSearchParams };

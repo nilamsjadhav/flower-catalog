@@ -10,7 +10,7 @@ const apiRouter = (request, response, next) => {
   if (pathname === '/api/guest-book') {
     return showCommentLog(request, response);
   }
-  next(request, response);
+  next();
 };
 
 module.exports = { apiRouter };

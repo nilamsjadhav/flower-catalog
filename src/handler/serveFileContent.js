@@ -14,7 +14,7 @@ const serveFileContent = (path) => (request, response, next) => {
   }
 
   if (!fs.existsSync(fileName)) {
-    next(request, response);
+    next();
     return;
   }
   response.setHeader('content-type', getMimeType(fileName));
