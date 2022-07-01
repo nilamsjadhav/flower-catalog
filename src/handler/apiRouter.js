@@ -4,13 +4,13 @@ const showCommentLog = ({ comments }, response) => {
   return true;
 };
 
-const apiRouter = (request, response) => {
+const apiRouter = (request, response, next) => {
   const pathname = request.url.pathname;
 
   if (pathname === '/api/guest-book') {
     return showCommentLog(request, response);
   }
-  return false;
+  next(request, response);
 };
 
 module.exports = { apiRouter };

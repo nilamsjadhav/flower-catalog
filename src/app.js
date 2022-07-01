@@ -1,7 +1,7 @@
 const { guestBookRouter } = require('./handler/guestBookRouter.js');
 const { notFound } = require('./handler/notFoundHandler.js');
 const { serveFileContent } = require('./handler/serveFileContent.js');
-const { parseSearchParams } = require('./handler/parseRequest.js');
+const { parseSearchParams } = require('./handler/parseSearchParams.js');
 const { createRouter } = require('./router.js');
 const { apiRouter } = require('./handler/apiRouter.js');
 const fs = require('fs');
@@ -13,14 +13,12 @@ const storeComment = (staticSrcPath) => {
 
 const loadData = (userViews, template, guestBookPath) => {
   const comments = JSON.parse(userViews);
-  return (request, response) => {
+  return (request, response, next) => {
     const pathname = request.url.pathname;
-    if (!pathname === '/guest-book' || pathname === '/add-comment') {
-      return false;
-    }
     request.comments = comments;
     request.template = template;
     request.storeComment = storeComment(guestBookPath);
+    next(request, request);
   };
 };
 

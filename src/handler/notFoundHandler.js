@@ -2,8 +2,8 @@ const { toHtml } = require('./htmlLibrary.js');
 
 const notFound = (request, response) => {
   response.statusCode = 404;
-  response.write(toHtml('Not found'));
-  return true;
+  response.setHeader('content-type', 'text/html');
+  response.end(toHtml('Not found'));
 };
 
 module.exports = { notFound };
