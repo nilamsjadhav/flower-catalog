@@ -65,7 +65,7 @@
     "no-process-exit": "error",
     "no-process-env": "error",
     "no-return-assign": "error",
-    "no-useless-return": "error",
+    "no-useless-return": "off",
     "max-depth": "error",
     "no-mixed-operators": "error",
     "complexity": [

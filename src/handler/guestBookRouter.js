@@ -1,6 +1,5 @@
 const fs = require('fs');
 const { generateList } = require('./htmlLibrary.js');
-const { parseBodyParams } = require('./parseBodyParams.js');
 
 const addComment = ({ name, comment }, comments) => {
   const dateTime = new Date().toLocaleString();
@@ -11,7 +10,7 @@ const addComment = ({ name, comment }, comments) => {
 const showGuestBook = ({ comments, template }, response) => {
   const commentList = generateList(comments);
   const modifiedTemplate = template.replace('__HISTORY__', commentList);
-  response.write(modifiedTemplate);
+  response.end(modifiedTemplate);
   return true;
 };
 
@@ -29,16 +28,7 @@ const guestBookRouter = (request, response, next) => {
     return showGuestBook(request, response);
   }
   if (pathname === '/add-comment' && request.method === 'POST') {
-    let userViews = '';
-
-    request.setEncoding('utf8');
-    request.on('data', (chunk) => {
-      userViews += chunk;
-    });
-    request.on('end', () => {
-      parseBodyParams(request, userViews);
-      commentHandler(request, response);
-    });
+    commentHandler(request, response);
     return;
   }
   next();

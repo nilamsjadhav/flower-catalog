@@ -4,6 +4,7 @@ const { startServer } = require('./src/server/startServer.js');
 const appConfig = {
   guestBookPath: './data/comment.json',
   staticSrcPath: './resource/template.html',
+  loginPagePath: './public/login.html',
   serveFrom: './public'
 };
 
