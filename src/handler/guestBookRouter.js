@@ -11,14 +11,15 @@ const showGuestBook = ({ comments, template }, response) => {
   const commentList = generateList(comments);
   const modifiedTemplate = template.replace('__HISTORY__', commentList);
   response.end(modifiedTemplate);
-  return true;
 };
 
 const commentHandler = (request, response) => {
   const { bodyParams, comments } = request;
   const commentList = addComment(bodyParams, comments);
-  request.storeComment(JSON.stringify(commentList));
-  return showGuestBook(request, response);
+  const userViews = JSON.stringify(commentList);
+  request.storeComment(userViews);
+  response.statusCode = 201;
+  response.end(userViews);
 };
 
 const guestBookRouter = (request, response, next) => {

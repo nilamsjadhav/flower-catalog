@@ -2,14 +2,16 @@
 
 <head>
   <title>Guest Book</title>
-  <link rel="stylesheet" href="../css/flowers.css">
+  <link rel="stylesheet" href="css/flowers.css">
+  <script src="scripts/addCommentHandler.js"></script>
 </head>
 
 <body>
   <h1><a href="flower-catalog.html">&lt;&lt;</a>Guest Book</h1>
+  <a href="/logout">Log out</a>
   <h2>Leave a comment</h2>
 
-  <form action="/add-comment" method="post">
+  <form>
     <div>
       <label for="name">Name :</label>
       <input type="text" name="name" required>
@@ -18,10 +20,10 @@
       <label for="comment">Comment :</label>
       <textarea name="comment" cols="30" rows="5" required></textarea>
     </div>
-    <input type="submit" value="Submit">
+    <button type="button" onclick="addComments()">Submit</button>
   </form>
   <div class="comments">
-    <ul>
+    <ul class="comment-list">
       __HISTORY__
     </ul>
   </div>

@@ -8,8 +8,9 @@ const getMimeType = (file) => {
 const serveFileContent = (path) => (request, response, next) => {
   const pathname = request.url.pathname;
   let fileName = path + pathname;
+  console.log(pathname);
 
-  if (pathname === '/') {
+  if (pathname === '/' && request.method === 'GET') {
     fileName = path + '/flower-catalog.html';
   }
 

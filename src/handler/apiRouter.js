@@ -7,7 +7,7 @@ const showCommentLog = ({ comments }, response) => {
 const apiRouter = (request, response, next) => {
   const pathname = request.url.pathname;
 
-  if (pathname === '/api/guest-book') {
+  if (pathname === '/api/guest-book' && request.method === 'GET') {
     return showCommentLog(request, response);
   }
   next();

@@ -1,0 +1,52 @@
+<html>
+
+<head>
+  <title>Guest Book</title>
+  <link rel="stylesheet" href="css/flowers.css">
+  <script>
+    function generateList(response) {
+      const listElement = document.querySelector('.comment-list');
+      const listItems = document.createElement('li');
+      const { name, comment } = JSON.parse(response);
+      listItems.innerHTML = `Name : ${name} Comment: ${comment}`;
+      listElement.appendChild(listItems);
+    }
+    const guestBook = function () {
+      const xhr = new XMLHttpRequest();
+
+      xhr.addEventListener('load', () => {
+        generateList(xhr.response);
+      })
+      const formElements = document.querySelector('form');
+      const formData = new FormData(formElements);
+      const body = new URLSearchParams(formData);
+      xhr.open('POST', '/add-comment');
+      xhr.send(body);
+    }
+  </script>
+</head>
+
+<body>
+  <h1><a href="flower-catalog.html">&lt;&lt;</a>Guest Book</h1>
+  <a href="/logout">Log out</a>
+  <h2>Leave a comment</h2>
+
+  <form>
+    <div>
+      <label for="name">Name :</label>
+      <input type="text" name="name" required>
+    </div>
+    <div>
+      <label for="comment">Comment :</label>
+      <textarea name="comment" cols="30" rows="5" required></textarea>
+    </div>
+    <button type="button" onclick="guestBook()">Submit</button>
+  </form>
+  <div class="comments">
+    <ul class="comment-list">
+      __HISTORY__
+    </ul>
+  </div>
+</body>
+
+</html>
