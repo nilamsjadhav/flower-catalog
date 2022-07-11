@@ -8,7 +8,6 @@ const storeComment = (staticSrcPath) => {
 const loadData = (userViews, template, guestBookPath) => {
   const comments = JSON.parse(userViews);
   return (request, response, next) => {
-    const pathname = request.url.pathname;
     request.comments = comments;
     request.template = template;
     request.storeComment = storeComment(guestBookPath);
@@ -17,3 +16,4 @@ const loadData = (userViews, template, guestBookPath) => {
 };
 
 module.exports = { loadData };
+

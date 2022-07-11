@@ -1,5 +1,6 @@
 - ### DO ###
-
+  - [ ] Show current user name on guest-book page instead of saying user to type.
+  - [ ] Write data from registration page into file.
   - [ ] Add feature when user click on jar it will hide for a second.
   - [ ] Change structure of comments.
   - [ ] Create guest-book entity.

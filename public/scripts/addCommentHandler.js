@@ -15,34 +15,46 @@ const generateList = function (response) {
   });
 }
 
-const showComments = function () {
-  const xhr = new XMLHttpRequest();
-  xhr.addEventListener('load', () => generateList(xhr.response));
-
-  const formElement = document.querySelector('form');
-  const body = readFormData(formElement);
-  xhr.open('GET', '/api/guest-book');
-  xhr.send(body);
-}
-
 const readFormData = function (formElement) {
   const formData = new FormData(formElement);
   const body = new URLSearchParams(formData);
   return body;
 }
 
-const addComments = function () {
+const createXhrPost = function (path, body, callback) {
   const xhr = new XMLHttpRequest();
+  xhr.addEventListener('load', () => callback(xhr));
+  xhr.open('POST', path);
+  xhr.send(body);
+}
 
-  xhr.addEventListener('load', () => {
+const createXhrGet = function (path, callback) {
+  const xhr = new XMLHttpRequest();
+  xhr.addEventListener('load', () => callback(xhr));
+  xhr.open('GET', path);
+  xhr.send();
+}
+
+const showComments = function () {
+  xhrGet = (xhr) => {
+    if (xhr.status !== 200) {
+      return;
+    }
+    generateList(xhr.response)
+  };
+  createXhrGet('/api/guest-book', xhrGet);
+}
+
+const addComments = function () {
+  const formElement = document.querySelector('form');
+  const body = readFormData(formElement);
+
+  const xhrPost = (xhr) => {
     if (xhr.status !== 201) {
       return;
     }
     showComments(xhr.response);
     formElement.reset();
-  })
-  const formElement = document.querySelector('form');
-  const body = readFormData(formElement);
-  xhr.open('POST', '/add-comment');
-  xhr.send(body);
+  }
+  createXhrPost('/add-comment', body, xhrPost);
 }

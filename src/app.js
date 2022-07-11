@@ -21,7 +21,6 @@ const storeUsers = (usersLogPath) => {
 const loadCredentials = (usersLogPath, loginTemplate, clients) => {
   const users = JSON.parse(clients);
   return (request, response, next) => {
-    const pathname = request.url.pathname;
     request.loginTemplate = loginTemplate;
     request.users = users;
     request.storeUsers = storeUsers(usersLogPath);

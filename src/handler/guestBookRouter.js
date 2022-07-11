@@ -1,4 +1,3 @@
-const fs = require('fs');
 const { generateList } = require('./htmlLibrary.js');
 
 const addComment = ({ name, comment }, comments) => {
