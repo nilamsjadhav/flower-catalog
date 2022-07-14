@@ -43,6 +43,5 @@ const createApp = (appConfig, sessions, readFile, writeFile) => {
   return createRouter(handlers);
 };
 
-const app = (appConfig, sessions, readFile, writeFile) => params;
 
 module.exports = { createApp };

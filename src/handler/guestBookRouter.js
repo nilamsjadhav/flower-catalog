@@ -24,11 +24,11 @@ const commentHandler = (request, response) => {
 };
 
 const guestBookRouter = (sessions) => (request, response, next) => {
-  const pathname = request.url.pathname;
-  if (pathname === '/guest-book' && request.method === 'GET') {
+  if (request.matches('/guest-book', 'GET')) {
     return showGuestBook(request, response);
   }
-  if (pathname === '/add-comment' && request.method === 'POST') {
+
+  if (request.matches('/add-comment', 'POST')) {
     if (request.session) {
       commentHandler(request, response);
       return;
