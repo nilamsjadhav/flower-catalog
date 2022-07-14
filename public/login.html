@@ -2,20 +2,22 @@
 
 <head>
   <title>login</title>
+  <script src="scripts/validateUser.js"></script>
 </head>
 
 <body>
-  <form action="/login" method="post">
+  <form>
     <div>
       <label for="username">Username : </label>
-      <input type="text" name="username">
+      <input type="text" name="userId">
     </div>
     <div>
       <label for="password">Password : </label>
-      <input type="password" name="password">
+      <input type="password" name="pass">
     </div>
-    <input type="submit" value="Login">
+    <button type="button" onclick="validateUser()">login</button>
     <a href="/sign-up.html">Sign up</a>
+    <div id="message"></div>
   </form>
 </body>
 

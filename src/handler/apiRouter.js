@@ -1,5 +1,6 @@
 const showCommentLog = ({ comments }, response) => {
   response.setHeader('content-type', 'application/json');
+  response.setHeader('location', '/api/guest-book');
   response.end(JSON.stringify(comments));
 };
 

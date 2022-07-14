@@ -1,12 +1,17 @@
 - ### DO ###
+  - [ ] Use match method in all handlers.
+  - [ ] Extract function from createApp .
   - [ ] Show current user name on guest-book page instead of saying user to type.
-  - [ ] Write data from registration page into file.
   - [ ] Add feature when user click on jar it will hide for a second.
-  - [ ] Change structure of comments.
   - [ ] Create guest-book entity.
+  - [ ] Create session entity
   
 - ### DONE ###
 
+  - [x] First build login functionality then store into file.
+  - [x] Hard code some users and inject into request.
+  - [x] Write inject session and cookie handler.
+  - [x] Write data from registration page into file.
   - [x] while checking uri check method also.
   - [x] Rename handle => createRouter.
   - [x] rename guestBookHandler to guestBookRouter.

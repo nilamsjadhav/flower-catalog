@@ -8,9 +8,8 @@ const getMimeType = (file) => {
 const serveFileContent = (path) => (request, response, next) => {
   const pathname = request.url.pathname;
   let fileName = path + pathname;
-  console.log(pathname);
 
-  if (pathname === '/' && request.method === 'GET') {
+  if (request.matches('/', 'GET')) {
     fileName = path + '/flower-catalog.html';
   }
 
@@ -19,6 +18,7 @@ const serveFileContent = (path) => (request, response, next) => {
     return;
   }
   response.setHeader('content-type', getMimeType(fileName));
+  response.setHeader('location', pathname);
   const content = fs.readFileSync(fileName);
   response.end(content);
 };

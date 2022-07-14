@@ -1,4 +1,3 @@
-const fs = require('fs');
 const { guestBookRouter } = require('./handler/guestBookRouter.js');
 const { notFound } = require('./handler/notFoundHandler.js');
 const { serveFileContent } = require('./handler/serveFileContent.js');
@@ -9,41 +8,34 @@ const { loginRouter } = require('./handler/loginHandler.js');
 const { parseSearchParams } = require('./handler/parseSearchParams.js');
 const { bodyParamsHandler } = require('./handler/parseBodyParams.js');
 const { logoutHandler } = require('./handler/logoutHandler.js');
-const { loadData } = require('./handler/loadData.js');
+const { loadLoginData, loadCommentData } = require('./handler/loadData.js');
+const { registrationHandler } = require('./handler/registrationHandler.js');
+const { parseFileContent } = require('./handler/multipartFormDataHandler.js');
+const { injectSession } = require('./handler/injectSession.js');
 
-const sessions = {};
+const createApp = (appConfig, sessions, readFile, writeFile) => {
+  const { staticSrcPath, guestBookPath,
+    loginPagePath, serveFrom, databasePath } = appConfig;
 
-const storeUsers = (usersLogPath) => {
-  return (users) =>
-    fs.writeFileSync(usersLogPath, users, 'utf8');
-};
+  const template = readFile(staticSrcPath, 'utf8');
+  const comments = readFile(guestBookPath, 'utf8');
+  const loginTemplate = readFile(loginPagePath, 'utf8');
+  const users = readFile(databasePath, 'utf8');
 
-const loadCredentials = (usersLogPath, loginTemplate, clients) => {
-  const users = JSON.parse(clients);
-  return (request, response, next) => {
-    request.loginTemplate = loginTemplate;
-    request.users = users;
-    request.storeUsers = storeUsers(usersLogPath);
-    next();
-  };
-};
-const app = ({ staticSrcPath, guestBookPath, loginPagePath, usersLogPath, serveFrom }) => {
-  const template = fs.readFileSync(staticSrcPath, 'utf8');
-  const comments = fs.readFileSync(guestBookPath, 'utf8');
-  const loginTemplate = fs.readFileSync(loginPagePath, 'utf8');
-  const users = fs.readFileSync(usersLogPath, 'utf8');
-
-  const loadGuestBook = loadData(comments, template, guestBookPath);
-  const loadUsers = loadCredentials(usersLogPath, loginTemplate, users);
+  const loadGuestBook = loadCommentData(comments, template, guestBookPath, writeFile);
+  const loadUsers = loadLoginData(loginTemplate, users, databasePath, writeFile);
   const handlers = [
+    parseSearchParams,
     loadGuestBook,
     loadUsers,
-    parseSearchParams,
     bodyParamsHandler,
     parseCookie,
+    injectSession(sessions),
     loginRouter(sessions),
     logoutHandler(sessions),
-    guestBookRouter,
+    registrationHandler,
+    parseFileContent,
+    guestBookRouter(sessions),
     serveFileContent(serveFrom),
     apiRouter,
     notFound
@@ -51,4 +43,6 @@ const app = ({ staticSrcPath, guestBookPath, loginPagePath, usersLogPath, serveF
   return createRouter(handlers);
 };
 
-module.exports = { app };
+const app = (appConfig, sessions, readFile, writeFile) => params;
+
+module.exports = { createApp };

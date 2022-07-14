@@ -2,10 +2,11 @@
 
 <head>
   <title>sign-up</title>
+  <script src="scripts/registerUser.js"></script>
 </head>
 
-<body>w
-  <form action="/register">
+<body>
+  <form>
     <div>
       <label for="username">Username : </label>
       <input type="text" name="username">
@@ -14,8 +15,9 @@
       <label for="password">Password : </label>
       <input type="password" name="password">
     </div>
-    <input type="submit" value="register">
+    <button type="button" onclick="registerUser()">Register</button>
   </form>
+  <div id="message"></div>
 </body>
 
 </html>

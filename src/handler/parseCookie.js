@@ -1,5 +1,6 @@
 const parseCookie = (request, response, next) => {
   const cookieString = request.headers.cookie;
+
   if (!cookieString) {
     next();
     return;
@@ -10,6 +11,7 @@ const parseCookie = (request, response, next) => {
     const [field, value] = element.split('=');
     cookies[field] = value;
   });
+
   request.cookies = cookies;
   next();
 };

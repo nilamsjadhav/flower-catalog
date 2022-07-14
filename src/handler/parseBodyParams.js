@@ -1,6 +1,7 @@
 const parseBodyParams = (request, bodyParamsStr) => {
   const urlSearchParams = new URLSearchParams(bodyParamsStr);
   const params = urlSearchParams.entries();
+
   const bodyParams = {};
   for (const [param, value] of params) {
     bodyParams[param] = value;
@@ -10,8 +11,9 @@ const parseBodyParams = (request, bodyParamsStr) => {
 };
 
 const bodyParamsHandler = (request, response, next) => {
-  request.setEncoding('utf8');
   let userViews = '';
+
+  request.setEncoding('utf8');
   request.on('data', (chunk) => {
     userViews += chunk;
   });

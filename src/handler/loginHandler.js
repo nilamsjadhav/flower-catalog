@@ -1,43 +1,44 @@
-const loginHandler = (response, id) => {
-  response.statusCode = 302;
-  response.setHeader('Location', '/guest-book');
+const createSession = (request, sessions) => {
+  const id = new Date();
+  request.cookies = id;
+  const username = request.bodyParams.username;
+  sessions[id] = { id, username, date: new Date().toLocaleString() };
+  return id;
+}
+
+const isUserValid = ({ users, bodyParams }) => {
+  const { userId, pass } = bodyParams;
+  return users.some(({ username, password }) =>
+    username === userId && password === pass);
+};
+
+const loginHandler = (request, response, sessions) => {
+  const id = createSession(request, sessions);
+  response.statusCode = 201;
   response.setHeader('set-cookie', `id=${id}`);
   response.end();
 };
 
-const addUserDetails = ({ username, password }, users) => {
-  const dateTime = new Date().toLocaleString();
-  users.unshift({ username, password });
-  return users;
+const serveLogin = (request, response) => {
+  response.setHeader('Content-Type', 'text/html');
+  response.setHeader('location', '/signin');
+  response.end(request.loginTemplate);
 };
 
-const registrationHandler = (request, response) => {
-  const { bodyParams, users } = request;
-  const commentList = addUserDetails(bodyParams, users);
-  request.storeUsers(JSON.stringify(commentList));
-  return;
-};
-
-const loginRouter = (sessions) => (request, response, next) => {
-  const pathname = request.url.pathname;
-
-  if (pathname === '/guest-book' && !request.cookies) {
-    response.end(request.loginTemplate);
-    return;
+const loginRouter = sessions => (request, response, next) => {
+  if (request.matches('/guest-book', 'GET') && !request.session) {
+    return serveLogin(request, response);
   }
 
-  if (pathname === '/login' && request.method === 'POST') {
-    const id = Math.floor(Math.random() * 100);
-    const username = request.bodyParams.username;
-    sessions[id] = { id, username, date: new Date().toLocaleString() };
-    loginHandler(response, id);
-    return;
+  if (request.matches('/login', 'POST')) {
+    if (!isUserValid(request, response)) {
+      response.statusCode = 401;
+      response.end();
+      return;
+    }
+    return loginHandler(request, response, sessions);
   }
 
-  if (pathname === '/register') {
-    response.end(request.loginTemplate);
-    return;
-  }
   next();
 };
 
