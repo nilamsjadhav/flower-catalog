@@ -1,6 +1,6 @@
 const serveLogin = (request, response) => {
-  response.setHeader('Content-Type', 'text/html');
-  response.setHeader('location', '/signin');
+  response.set('Content-Type', 'text/html');
+  response.set('location', '/signin');
   response.end(request.loginTemplate);
 };
 

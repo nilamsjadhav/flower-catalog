@@ -23,7 +23,7 @@ const validateUser = function () {
       message.innerText = 'Invalid User...!'
       return;
     }
-    window.location.href = '/show-guest-book';
+    window.location.href = '/guest-book/show-guest-book';
   }
   createXhrPost('/login', body, xhrPost);
 };

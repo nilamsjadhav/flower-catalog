@@ -42,7 +42,7 @@ const showComments = function () {
     }
     generateList(xhr.response)
   };
-  createXhrGet('/api/guest-book', xhrGet);
+  createXhrGet('api/comments', xhrGet);
 }
 
 const addComments = function () {
@@ -52,8 +52,8 @@ const addComments = function () {
     if (xhr.status !== 201) {
       return;
     }
-    showComments(xhr.response);
+    showComments();
     formElement.reset();
   }
-  createXhrPost('/add-comment', body, xhrPost);
+  createXhrPost('add-comment', body, xhrPost);
 }

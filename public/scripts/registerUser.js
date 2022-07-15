@@ -16,8 +16,8 @@ const showSuccessMsg = function () {
   message.innerText = 'You registered successfully...!';
 
   setTimeout(() => {
-    window.location.href = '/guest-book';
-  }, 2000);
+    window.location.href = '/login.html';
+  }, 200);
 }
 
 const registerUser = function () {

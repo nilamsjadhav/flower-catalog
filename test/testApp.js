@@ -1,18 +1,17 @@
 const fs = require('fs');
 const request = require('supertest');
 const { createApp } = require('../src/app.js');
+const initApp = (sessions = {}) => createApp({
+  guestBookPath: './test/testData/comment.json',
+  guestBookTemplatePath: './resource/template.html',
+  loginPagePath: './resource/login.html',
+  databasePath: './test/testData/users.json',
+}, sessions, fs.readFileSync);
 
 describe('GET static pages', () => {
   let app;
   beforeEach(() => {
-    const appConfig = {
-      guestBookPath: './test/testData/comment.json',
-      staticSrcPath: './resource/template.html',
-      loginPagePath: './public/login.html',
-      databasePath: './test/testData/users.json',
-      serveFrom: './public'
-    };
-    app = createApp(appConfig, {}, fs.readFileSync);
+    app = initApp();
   })
 
   it('should return 200 when request is GET /', (done) => {
@@ -40,14 +39,7 @@ describe('GET static pages', () => {
 describe('GET non-existing page', () => {
   let app;
   beforeEach(() => {
-    const appConfig = {
-      guestBookPath: './test/testData/comment.json',
-      staticSrcPath: './resource/template.html',
-      loginPagePath: './public/login.html',
-      databasePath: './test/testData/users.json',
-      serveFrom: './public'
-    };
-    app = createApp(appConfig, {}, fs.readFileSync);
+    app = initApp();
   })
 
   it('should return 404 when page not found.', (done) => {
@@ -59,79 +51,64 @@ describe('GET non-existing page', () => {
 });
 
 describe('GET /guest-book', () => {
-  const appConfig = {
-    guestBookPath: './test/testData/comment.json',
-    staticSrcPath: './resource/template.html',
-    loginPagePath: './public/login.html',
-    databasePath: './test/testData/users.json',
-    serveFrom: './public'
-  };
 
   it('should serve guest book when cookies are present', (done) => {
     const sessions = { 1: { id: 1, username: 'abc' } };
-    const myApp = createApp(appConfig, sessions, fs.readFileSync);
+    const app = initApp(sessions);
 
-    request(myApp)
-      .get('/guest-book')
+    request(app)
+      .get('/guest-book/show-guest-book')
       .set('cookie', 'id=1')
       .expect('content-type', /html/)
-      .expect('location', '/show-guest-book')
       .expect(200, done);
   });
 
   it('should serve login page when cookies are not present', (done) => {
-    const sessions = {};
-    const myApp = createApp(appConfig, sessions, fs.readFileSync);
-    request(myApp)
+    const app = initApp();
+    request(app)
       .get('/guest-book')
-      .expect('content-type', /html/)
-      .expect('location', '/signin')
-      .expect(200, done);
+      .expect('location', '/login.html')
+      .expect(302, done);
   });
 });
 
 describe('GET /api/guest-book', () => {
   let app;
   beforeEach(() => {
-    const appConfig = {
-      guestBookPath: './test/testData/comment.json',
-      staticSrcPath: './resource/template.html',
-      loginPagePath: './public/login.html',
-      databasePath: './test/testData/users.json',
-      serveFrom: './public'
-    };
-    const sessions = {};
-    app = createApp(appConfig, sessions, fs.readFileSync);
+    const sessions = { 1: { id: 1, username: 'abc' } };
+    app = initApp(sessions);
   })
 
   it('should serve guest book api', (done) => {
     request(app)
-      .get('/api/guest-book')
+      .get('/guest-book/api/comments')
+      .set('cookie', 'id=1')
       .expect('content-type', /json/)
-      .expect('location', '/api/guest-book')
       .expect(200, done);
   });
 });
 
 describe('POST comments', () => {
-  let app;
-  beforeEach(() => {
-    const appConfig = {
-      guestBookPath: './test/testData/comment.json',
-      staticSrcPath: './resource/template.html',
-      loginPagePath: './public/login.html',
-      databasePath: './test/testData/users.json',
-      serveFrom: './public'
-    };
-    const sessions = { 1: { id: 1, username: 'abc' } };
-    app = createApp(appConfig, sessions, fs.readFileSync, fs.writeFileSync);
-  })
 
   it('should post given comment', (done) => {
+    const sessions = { 1: { id: 1, username: 'abc' } };
+    let app = initApp(sessions);
     request(app)
-      .post('/add-comment')
+      .post('/guest-book/add-comment')
       .set('cookie', 'id=1')
       .send('name=abc&comment=good flowers')
       .expect(201, done)
+  });
+});
+
+describe('GET /logout', () => {
+
+  it('should redirect to home page', (done) => {
+    const sessions = { 1: { id: 1, username: 'abc' } };
+    let app = initApp(sessions);
+    request(app)
+      .get('/logout')
+      .set('cookie', 'id=1')
+      .expect(302, done);
   });
 });
