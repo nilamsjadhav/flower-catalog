@@ -9,21 +9,31 @@ const addComment = ({ name, comment }, comments) => {
 const showGuestBook = ({ comments, template }, response) => {
   const commentList = generateList(comments);
   const modifiedTemplate = template.replace('__HISTORY__', commentList);
-  response.setHeader('location', '/guest-book');
-  response.setHeader('content-type', 'text/html');
+  response.set('location', '/show-guest-book');
+  response.set('content-type', 'text/html');
   response.end(modifiedTemplate);
 };
 
 const commentHandler = (request, response) => {
-  const { bodyParams, comments } = request;
-  const commentList = addComment(bodyParams, comments);
+  const { body, comments } = request;
+  const commentList = addComment(body, comments);
   const userViews = JSON.stringify(commentList);
   request.storeComment(userViews);
-  response.statusCode = 201;
+  response.status(201);
   response.end(userViews);
 };
 
-const guestBookRouter = (sessions) => (request, response, next) => {
+const guestBook = (request, response) => {
+  if (!request.cookies) {
+    response.set('content-type', 'text/html');
+    response.set('location', '/signin');
+    response.end(request.loginTemplate);
+    return;
+  }
+  return showGuestBook(request, response);
+};
+
+const guestBookRouter = (request, response, next) => {
   if (request.matches('/guest-book', 'GET')) {
     return showGuestBook(request, response);
   }
@@ -37,4 +47,4 @@ const guestBookRouter = (sessions) => (request, response, next) => {
   next();
 };
 
-module.exports = { guestBookRouter, showGuestBook };
+module.exports = { guestBookRouter, showGuestBook, guestBook, commentHandler };

@@ -19,7 +19,6 @@ describe('GET static pages', () => {
     request(app)
       .get('/')
       .expect('content-type', /html/)
-      .expect('location', '/')
       .expect(200, done);
   });
 
@@ -27,7 +26,6 @@ describe('GET static pages', () => {
     request(app)
       .get('/abeliophyllum.html')
       .expect('content-type', /html/)
-      .expect('location', '/abeliophyllum.html')
       .expect(200, done);
   });
 
@@ -35,7 +33,6 @@ describe('GET static pages', () => {
     request(app)
       .get('/ageratum.html')
       .expect('content-type', /html/)
-      .expect('location', '/ageratum.html')
       .expect(200, done);
   });
 });
@@ -78,7 +75,7 @@ describe('GET /guest-book', () => {
       .get('/guest-book')
       .set('cookie', 'id=1')
       .expect('content-type', /html/)
-      .expect('location', '/guest-book')
+      .expect('location', '/show-guest-book')
       .expect(200, done);
   });
 

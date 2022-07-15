@@ -3,19 +3,12 @@ const addUserDetails = ({ username, password }, users) => {
   return users;
 };
 
-const registrationHandler = (request, response, next) => {
-  const pathname = request.url.pathname;
-
-  if (pathname !== '/register' && request.method !== "POST") {
-    next();
-    return;
-  }
-  const { bodyParams, users } = request;
-  const usersRecord = addUserDetails(bodyParams, users);
+const registrationHandler = (request, response) => {
+  const { body, users } = request;
+  const usersRecord = addUserDetails(body, users);
   request.storeUsers(JSON.stringify(usersRecord));
-  response.statusCode = 201;
+  response.status(201);
   response.end(request.loginTemplate);
-  return;
 };
 
 module.exports = { registrationHandler };

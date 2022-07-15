@@ -48,7 +48,6 @@ const showComments = function () {
 const addComments = function () {
   const formElement = document.querySelector('form');
   const body = readFormData(formElement);
-
   const xhrPost = (xhr) => {
     if (xhr.status !== 201) {
       return;

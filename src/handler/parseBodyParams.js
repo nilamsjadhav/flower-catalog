@@ -12,7 +12,6 @@ const parseBodyParams = (request, bodyParamsStr) => {
 
 const bodyParamsHandler = (request, response, next) => {
   let userViews = '';
-
   request.setEncoding('utf8');
   request.on('data', (chunk) => {
     userViews += chunk;

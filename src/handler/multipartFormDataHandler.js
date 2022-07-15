@@ -62,6 +62,7 @@ const removeBoundaries = (buffer, pattern) => {
 const parseFileContent = (request, response, next) => {
   let data = [];
   const pathname = request.url.pathname;
+
   if (pathname === '/upload-file' && request.method === 'POST') {
     request.on('data', (chunk) => {
       data = data.concat(chunk);

@@ -1,45 +1,37 @@
-const createSession = (request, sessions) => {
-  const id = new Date();
-  request.cookies = id;
-  const username = request.bodyParams.username;
-  sessions[id] = { id, username, date: new Date().toLocaleString() };
-  return id;
-}
-
-const isUserValid = ({ users, bodyParams }) => {
-  const { userId, pass } = bodyParams;
-  return users.some(({ username, password }) =>
-    username === userId && password === pass);
-};
-
-const loginHandler = (request, response, sessions) => {
-  const id = createSession(request, sessions);
-  response.statusCode = 201;
-  response.setHeader('set-cookie', `id=${id}`);
-  response.end();
-};
-
 const serveLogin = (request, response) => {
   response.setHeader('Content-Type', 'text/html');
   response.setHeader('location', '/signin');
   response.end(request.loginTemplate);
 };
 
-const loginRouter = sessions => (request, response, next) => {
-  if (request.matches('/guest-book', 'GET') && !request.session) {
-    return serveLogin(request, response);
-  }
+const createSession = (request, sessions) => {
+  const id = new Date().getTime();
+  request.cookies = id;
+  const username = request.body.userId;
+  sessions[id] = { id, username, date: new Date().toLocaleString() };
+  return id;
+}
 
-  if (request.matches('/login', 'POST')) {
-    if (!isUserValid(request, response)) {
-      response.statusCode = 401;
-      response.end();
-      return;
-    }
-    return loginHandler(request, response, sessions);
-  }
-
-  next();
+const isUserValid = ({ users, body }) => {
+  const { userId, pass } = body;
+  return users.some(({ username, password }) =>
+    username === userId && password === pass);
 };
 
-module.exports = { loginRouter };
+const setCookies = (request, response, sessions) => {
+  const id = createSession(request, sessions);
+  response.status(201);
+  response.cookie('id', id);
+  response.end();
+};
+
+const authenticateUser = sessions => (request, response) => {
+  if (!isUserValid(request, response)) {
+    response.statusCode = 401;
+    response.end();
+    return;
+  }
+  return setCookies(request, response, sessions);
+};
+
+module.exports = { authenticateUser, serveLogin };
