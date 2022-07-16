@@ -2,4 +2,4 @@ data/
 node_modules/
 practice/
 uploadedFiles/
-testData/
+test/testData/
