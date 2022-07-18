@@ -1,6 +1,6 @@
-const createListItem = function ({ dateTime, name, comment }) {
+const createListItem = function ({ dateTime, username, comment }) {
   const listItem = document.createElement('li');
-  listItem.innerHTML = [dateTime, name, comment].join(' ');
+  listItem.innerHTML = [dateTime, username, comment].join(' ');
   return listItem;
 }
 

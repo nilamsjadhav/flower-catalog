@@ -11,7 +11,7 @@ const applyTemplate = (templateText, dictionary) => {
 }
 
 const ensureLoggedIn = (req, res, next) => {
-  if (!req.session) {
+  if (!req.session.id) {
     res.status(302);
     return res.redirect('/login.html');
   }
@@ -24,9 +24,9 @@ const getComments = ({ comments }, res) => {
 };
 
 const addComment = (req, res, next) => {
-  const { body: { username: name, comment }, comments } = req;
+  const { body: { username, comment }, comments } = req;
   const dateTime = new Date().toLocaleString();
-  comments.unshift({ name, comment, dateTime });
+  comments.unshift({ username, comment, dateTime });
   next();
 }
 
